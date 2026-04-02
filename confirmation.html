@@ -5,46 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Commande confirmée — GreenLeaf Shop</title>
   <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TNVHZTFW');</script>
-<!-- End Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TNVHZTFW');</script>
+  <!-- End Google Tag Manager -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&display=swap');
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'DM Sans',sans-serif; background:#F0F5E9; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2rem; }
-    .card { background:#fff; border-radius:16px; padding:3rem; max-width:520px; text-align:center; box-shadow:0 4px 24px rgba(27,58,45,.1); }
+    :root {
+      --forest: #2C5F2D;
+      --forest-dark: #1B3A2D;
+      --moss: #97BC62;
+      --sage: #5A7D6B;
+      --cream: #F0F5E9;
+    }
+    body { font-family:'DM Sans',sans-serif; background: var(--cream); min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2rem; }
+    .card { background:#fff; border-radius:16px; padding:3rem; max-width:560px; width:100%; text-align:center; box-shadow:0 4px 24px rgba(27,58,45,.1); }
     .check { font-size:4rem; margin-bottom:1rem; }
-    h1 { font-family:'DM Serif Display',serif; color:#1B3A2D; font-size:1.8rem; margin-bottom:.75rem; }
-    p { color:#5A7D6B; margin-bottom:1.5rem; }
-    a { display:inline-block; background:#2C5F2D; color:#fff; padding:.75rem 2rem; border-radius:6px; text-decoration:none; font-weight:700; transition:background .2s; }
-    a:hover { background:#1B3A2D; }
+    h1 { font-family:'DM Serif Display',serif; color: var(--forest-dark); font-size:1.8rem; margin-bottom:.75rem; }
+    p { color: var(--sage); margin-bottom:1rem; }
+    .order-details { text-align:left; background: var(--cream); border-radius:10px; padding:1.25rem; margin:1.5rem 0; }
+    .order-details h3 { font-family:'DM Serif Display',serif; color: var(--forest-dark); font-size:1rem; margin-bottom:.75rem; }
+    .order-item { display:flex; justify-content:space-between; padding:.4rem 0; font-size:.9rem; color:#1A1A1A; border-bottom:1px solid rgba(0,0,0,.06); }
+    .order-item:last-child { border-bottom:none; }
+    .order-total { display:flex; justify-content:space-between; padding:.75rem 0 0; font-weight:700; font-size:1.1rem; color: var(--forest); border-top:2px solid var(--moss); margin-top:.5rem; }
+    .order-id { font-size:.8rem; color: var(--sage); margin-top:.5rem; font-family:monospace; }
+    a { display:inline-block; background: var(--forest); color:#fff; padding:.75rem 2rem; border-radius:6px; text-decoration:none; font-weight:700; transition:background .2s; }
+    a:hover { background: var(--forest-dark); }
   </style>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TNVHZTFW"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TNVHZTFW" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <div class="card">
     <div class="check">✅</div>
     <h1>Commande confirmée !</h1>
     <p>Merci pour votre achat éco-responsable. Vous recevrez un email de confirmation très bientôt.</p>
+
+    <div class="order-details" id="order-details">
+      <h3>Récapitulatif de la commande</h3>
+      <div id="order-items"></div>
+    </div>
+
     <a href="index.html">Retour à la boutique</a>
   </div>
+
   <script>
     window.dataLayer = window.dataLayer || [];
-    dataLayer.push({
-      event: "purchase",
-      ecommerce: {
-        transaction_id: "TXN-" + Date.now(),
-        value: 49.90,
-        currency: "EUR",
-        items: [{ item_id: "ECO-001", item_name: "Gourde en inox", quantity: 1, price: 24.90 }]
-      }
-    });
+
+    // Récupérer les données de commande depuis sessionStorage
+    const orderData = sessionStorage.getItem("order");
+
+    if (orderData) {
+      const order = JSON.parse(orderData);
+
+      // Push purchase event dans le dataLayer (pour le déclencheur Page vue confirmation)
+      dataLayer.push({
+        event: "purchase",
+        ecommerce: {
+          transaction_id: order.transaction_id,
+          value: order.value,
+          currency: "EUR",
+          items: order.items
+        }
+      });
+
+      // Afficher les détails de la commande
+      const itemsContainer = document.getElementById("order-items");
+      order.items.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "order-item";
+        div.innerHTML = '<span>' + item.item_name + '</span><span>' + item.price.toFixed(2) + ' €</span>';
+        itemsContainer.appendChild(div);
+      });
+
+      // Total
+      const totalDiv = document.createElement("div");
+      totalDiv.className = "order-total";
+      totalDiv.innerHTML = '<span>Total</span><span>' + order.value.toFixed(2) + ' €</span>';
+      itemsContainer.appendChild(totalDiv);
+
+      // ID de transaction
+      const idDiv = document.createElement("div");
+      idDiv.className = "order-id";
+      idDiv.textContent = "N° " + order.transaction_id;
+      itemsContainer.appendChild(idDiv);
+
+      // Nettoyer le sessionStorage
+      sessionStorage.removeItem("order");
+    } else {
+      document.getElementById("order-details").style.display = "none";
+    }
   </script>
 </body>
 </html>
