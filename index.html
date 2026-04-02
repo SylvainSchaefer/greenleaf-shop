@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenLeaf Shop — Produits éco-responsables</title>
+
+  <!-- Google Tag Manager -->
+  <!-- REMPLACER GTM-XXXXXXX par votre vrai ID conteneur GTM -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --forest: #2C5F2D;
+      --forest-dark: #1B3A2D;
+      --moss: #97BC62;
+      --sage: #5A7D6B;
+      --cream: #F0F5E9;
+      --white: #FFFFFF;
+      --text: #1A1A1A;
+      --gold: #D4A843;
+      --card-shadow: 0 2px 16px rgba(27,58,45,0.08);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--forest-dark);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--moss);
+      text-decoration: none;
+    }
+    nav .logo span { color: var(--white); }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a {
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      font-size: .95rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--moss); }
+    .cart-badge {
+      background: var(--moss);
+      color: var(--forest-dark);
+      font-size: .75rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 50%;
+      margin-left: 4px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--forest-dark) 0%, var(--forest) 100%);
+      color: var(--white);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .hero h1 span { color: var(--moss); }
+    .hero p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,.75);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    .hero .cta {
+      display: inline-block;
+      background: var(--moss);
+      color: var(--forest-dark);
+      padding: .85rem 2.5rem;
+      border-radius: 6px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1.05rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .hero .cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+
+    /* ── SECTION ── */
+    section { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
+    section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--forest-dark);
+      margin-bottom: .5rem;
+    }
+    section .subtitle {
+      color: var(--sage);
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+    }
+
+    /* ── PRODUCT GRID ── */
+    .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+    .product-card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(27,58,45,.12); }
+    .product-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      background: linear-gradient(135deg, #e8f0e0 0%, #d4e4c4 100%);
+    }
+    .product-body { padding: 1.25rem; }
+    .product-body h3 { font-family: 'DM Serif Display', serif; font-size: 1.15rem; margin-bottom: .35rem; color: var(--forest-dark); }
+    .product-body .price { font-size: 1.3rem; font-weight: 700; color: var(--forest); margin-bottom: .75rem; }
+    .product-body .desc { font-size: .88rem; color: var(--sage); margin-bottom: 1rem; }
+    .btn-add-cart {
+      width: 100%;
+      padding: .7rem;
+      background: var(--forest);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .2s;
+    }
+    .btn-add-cart:hover { background: var(--forest-dark); }
+
+    /* ── NEWSLETTER ── */
+    .newsletter-section {
+      background: var(--forest);
+      border-radius: 16px;
+      padding: 3rem;
+      text-align: center;
+      color: var(--white);
+      margin: 2rem auto 4rem;
+      max-width: 1100px;
+    }
+    .newsletter-section h2 { color: var(--moss); font-family: 'DM Serif Display', serif; margin-bottom: .5rem; }
+    .newsletter-section p { color: rgba(255,255,255,.7); margin-bottom: 1.5rem; }
+    .newsletter-form { display: flex; gap: .75rem; max-width: 480px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .newsletter-form input {
+      flex: 1;
+      min-width: 220px;
+      padding: .8rem 1.2rem;
+      border: 2px solid rgba(255,255,255,.2);
+      border-radius: 6px;
+      background: rgba(255,255,255,.1);
+      color: var(--white);
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+    }
+    .newsletter-form input::placeholder { color: rgba(255,255,255,.5); }
+    .newsletter-form input:focus { border-color: var(--moss); }
+    .newsletter-form button {
+      padding: .8rem 2rem;
+      background: var(--moss);
+      color: var(--forest-dark);
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform .2s;
+    }
+    .newsletter-form button:hover { transform: translateY(-2px); }
+
+    /* ── CONFIRMATION ── */
+    .confirmation-banner {
+      display: none;
+      background: var(--moss);
+      color: var(--forest-dark);
+      padding: 2rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      border-radius: 12px;
+      margin: 2rem auto;
+      max-width: 1100px;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--forest-dark);
+      color: var(--white);
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,.25);
+      transform: translateY(120%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      z-index: 200;
+    }
+    .toast.show { transform: translateY(0); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--forest-dark);
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding: 2rem;
+      font-size: .85rem;
+    }
+    footer a { color: var(--moss); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2rem; }
+      nav ul { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">Green<span>Leaf</span></a>
+    <ul>
+      <li><a href="#products">Produits</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+      <li><a href="#" id="cart-link">Panier <span class="cart-badge" id="cart-count">0</span></a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <h1>Des produits <span>éco-responsables</span><br>pour votre quotidien</h1>
+    <p>Découvrez notre sélection de produits durables, naturels et respectueux de l'environnement. Faites le choix du green.</p>
+    <a href="#products" class="cta">Découvrir nos produits</a>
+  </header>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <h2>Nos produits</h2>
+    <p class="subtitle">Sélectionnés avec soin pour un impact minimal sur la planète.</p>
+    <div class="products" id="product-grid"></div>
+  </section>
+
+  <!-- CONFIRMATION (simulated purchase) -->
+  <div class="confirmation-banner" id="confirmation">
+    ✓ Commande confirmée ! Merci pour votre achat éco-responsable.
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div class="newsletter-section" id="newsletter">
+    <h2>Restez informé</h2>
+    <p>Recevez nos nouveautés et offres exclusives directement dans votre boîte mail.</p>
+    <div class="newsletter-form">
+      <input type="email" id="email-input" placeholder="votre@email.com" />
+      <button id="btn-newsletter">S'inscrire</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 GreenLeaf Shop — Projet Analytics GTM par <a href="#">Sylvain SCHAEFER</a></p>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ── dataLayer init ──
+    window.dataLayer = window.dataLayer || [];
+
+    // ── PRODUCTS DATA ──
+    const products = [
+      { id: "ECO-001", name: "Gourde en inox 750ml", price: 24.90, emoji: "🫗", desc: "Acier inoxydable, sans BPA, garde au chaud 12h." },
+      { id: "ECO-002", name: "Brosse à dents bambou", price: 4.50, emoji: "🪥", desc: "Bambou certifié FSC, poils en nylon recyclé." },
+      { id: "ECO-003", name: "Sac en coton bio", price: 12.00, emoji: "👜", desc: "Coton biologique GOTS, teinture végétale." },
+      { id: "ECO-004", name: "Savon solide lavande", price: 8.90, emoji: "🧼", desc: "Saponifié à froid, huile essentielle de lavande bio." },
+      { id: "ECO-005", name: "Bee Wrap (lot de 3)", price: 15.00, emoji: "🐝", desc: "Alternative zéro déchet au film plastique." },
+      { id: "ECO-006", name: "Carnet recyclé A5", price: 9.50, emoji: "📓", desc: "Papier 100% recyclé, couverture kraft." },
+    ];
+
+    let cartCount = 0;
+
+    // ── RENDER PRODUCTS ──
+    const grid = document.getElementById("product-grid");
+    products.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <div class="product-img">${p.emoji}</div>
+        <div class="product-body">
+          <h3>${p.name}</h3>
+          <div class="price">${p.price.toFixed(2)} €</div>
+          <div class="desc">${p.desc}</div>
+          <button class="btn-add-cart" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}">
+            Ajouter au panier
+          </button>
+        </div>
+      `;
+
+      // ── EVENT: view_item (when card becomes visible) ──
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            dataLayer.push({
+              event: "view_item",
+              ecommerce: {
+                item_id: p.id,
+                item_name: p.name,
+                price: p.price
+              }
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      grid.appendChild(card);
+      observer.observe(card);
+    });
+
+    // ── EVENT: add_to_cart ──
+    document.querySelectorAll(".btn-add-cart").forEach(btn => {
+      btn.addEventListener("click", function () {
+        const id = this.dataset.id;
+        const name = this.dataset.name;
+        const price = parseFloat(this.dataset.price);
+
+        dataLayer.push({
+          event: "add_to_cart",
+          ecommerce: {
+            item_id: id,
+            item_name: name,
+            price: price,
+            quantity: 1
+          }
+        });
+
+        cartCount++;
+        document.getElementById("cart-count").textContent = cartCount;
+        showToast(`✓ "${name}" ajouté au panier`);
+      });
+    });
+
+    // ── EVENT: purchase (simulate on cart click when items present) ──
+    document.getElementById("cart-link").addEventListener("click", function (e) {
+      e.preventDefault();
+      if (cartCount === 0) {
+        showToast("Votre panier est vide !");
+        return;
+      }
+
+      const transactionId = "TXN-" + Date.now();
+      const totalValue = cartCount * 15; // simplified
+
+      dataLayer.push({
+        event: "purchase",
+        ecommerce: {
+          transaction_id: transactionId,
+          value: totalValue,
+          currency: "EUR",
+          items: [{ item_id: "mixed", item_name: "Panier GreenLeaf", quantity: cartCount }]
+        }
+      });
+
+      document.getElementById("confirmation").style.display = "block";
+      cartCount = 0;
+      document.getElementById("cart-count").textContent = "0";
+      showToast("Commande validée ! Merci 🎉");
+
+      // Scroll to confirmation
+      document.getElementById("confirmation").scrollIntoView({ behavior: "smooth" });
+    });
+
+    // ── EVENT: sign_up (newsletter) ──
+    document.getElementById("btn-newsletter").addEventListener("click", function () {
+      const email = document.getElementById("email-input").value;
+      if (!email || !email.includes("@")) {
+        showToast("Veuillez entrer un email valide.");
+        return;
+      }
+
+      dataLayer.push({
+        event: "sign_up",
+        method: "newsletter"
+      });
+
+      document.getElementById("email-input").value = "";
+      showToast("✓ Inscription réussie ! Bienvenue 🌿");
+    });
+
+    // ── TOAST ──
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3000);
+    }
+  </script>
+</body>
+</html>
